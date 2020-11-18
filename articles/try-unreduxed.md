@@ -2,8 +2,8 @@
 title: '巷で話題の新しい状態管理ライブラリ "unreduxed" を試す！'
 emoji: "🆕"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["react"]
-published: false
+topics: ["react", "redux"]
+published: true
 ---
 
 # unreduxed
