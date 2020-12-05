@@ -148,7 +148,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
-      <div className={styles.element}>hogejoge</div>
+      <div className={styles.element}>Hoge Hoge</div>
       <button onClick={toggleTheme}>Toggle Theme</button>
     </div>
   );
