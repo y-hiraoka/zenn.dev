@@ -32,6 +32,10 @@ published: true
 
 そこでパスを型安全に生成するライブラリを開発してみました。
 
+## リポジトリ
+
+https://github.com/y-hiraoka/typed-path-builder
+
 ## インストール
 
 ```
