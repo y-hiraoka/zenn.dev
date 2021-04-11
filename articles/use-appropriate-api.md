@@ -1,5 +1,5 @@
 ---
-title: "そろそろ技術ブログで setCount(count + 1) と書くのはやめませんか"
+title: "【React】そろそろ技術ブログで setCount(count + 1) と書くのはやめませんか"
 emoji: "🤖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react"]
