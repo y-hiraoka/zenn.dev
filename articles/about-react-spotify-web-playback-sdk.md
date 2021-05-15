@@ -3,7 +3,7 @@ title: "Spotify Web Playback SDK の React ラッパーライブラリを作っ�
 emoji: "🎺"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react", "spotify"]
-published: false
+published: true
 ---
 
 # React らしい API を目指して
