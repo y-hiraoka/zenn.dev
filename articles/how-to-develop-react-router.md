@@ -3,7 +3,7 @@ title: "react-router 作り方"
 emoji: "🪵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react", "reactrouter", "history"]
-published: false
+published: true
 ---
 
 # `history` で自分だけの最強のルーターライブラリを作ろう！
