@@ -3,7 +3,7 @@ title: "Chakra UI の全画面 Drawer をスマホで開くとコンポーネン
 emoji: "📱"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react", "chakraui"]
-published: false
+published: true
 ---
 
 # Drawer の size を "full" にする場合は要注意
