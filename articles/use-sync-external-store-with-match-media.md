@@ -133,7 +133,7 @@ const MyApp: FC = () => {
 
 それでは順番に作っていきます。
 
-### `useMemo` で `MediaQueryList` オブエジェクトを保持する
+### `useMemo` で `MediaQueryList` オブジェクトを保持する
 
 ```ts
 const matchMediaList = useMemo(
