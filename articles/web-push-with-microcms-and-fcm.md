@@ -3,7 +3,7 @@ title: "iOS でも Web Push が送れる！microCMS と Firebase Cloud Messaging
 emoji: "🔔"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["firebase", "microcms", "nextjs"]
-published: false
+published: true
 publication_name: chot
 ---
 
