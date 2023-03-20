@@ -33,6 +33,8 @@ https://github.com/y-hiraoka/microcms-notification-media
 
 サイトには 1 日 2 回、適当な記事が入稿されるようにしてあります。このサイトのプッシュ通知を ON にしていただくと、プッシュ通知を受け取る体験ができるようになっています！なお、架空のメディアサイトからは通知オフができませんので、~~うざくなったら~~オフにしたい場合はブラウザの設定から通知設定の変更をお願いします。
 
+iOS をお使いの人は、iOS 16.4 beta にアップデートしてお試しください。beta 版のインストールには [Apple Beta Software Program](https://beta.apple.com/sp/betaprogram) への登録が必要です。
+
 ## iOS プッシュ通知対応の注意点
 
 iOS のプッシュ通知をサポートするにあたり、いくつか注意点があります。
