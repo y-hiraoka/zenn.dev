@@ -464,7 +464,7 @@ export const notifyNewArticle = functions.https.onRequest(
 );
 ```
 
-先頭 2 つの if 文はただのリクエスト検証です。2 つ目については、 [microCMS のドキュメントにはもっとセキュアなリクエスト検証の方法が紹介してあります](https://document.microcms.io/manual/webhook-setting#hb2d39bd6cc)のでこれは参考にしないほうが良いです。
+先頭 2 つの if 文はただのリクエスト検証です。2 つ目の if 文では環境変数を使用しているのでセットしておいてください。なお、[microCMS のドキュメントにはもっとセキュアなリクエスト検証の方法が紹介してあります](https://document.microcms.io/manual/webhook-setting#hb2d39bd6cc)のでこれは参考にしないほうが良いです。
 
 3 つ目の if 文では、 Webhook の種類が記事の新規作成かどうかを確認しています。ここでは削除や更新のときはプッシュ通知したくないので、 `webhook.type !== "new"` のときはさっさとレスポンスを返してしまいます。
 
