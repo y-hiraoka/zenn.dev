@@ -1,5 +1,5 @@
 ---
-title: "iOS Safari でも Web Push が送れる！microCMS と Firebase Cloud Messaging を使った実装方法"
+title: "iOS でも Web Push が送れる！microCMS と Firebase Cloud Messaging を使った実装方法"
 emoji: "🔔"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["firebase", "microcms", "nextjs"]
