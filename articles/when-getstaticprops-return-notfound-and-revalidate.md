@@ -3,7 +3,7 @@ title: "【Next.js】getStaticPropsでのnotFoundとrevalidateの組み合わせ
 emoji: "🫡"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nextjs"]
-published: false
+published: true
 publication_name: chot
 ---
 
