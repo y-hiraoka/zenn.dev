@@ -4,6 +4,7 @@ emoji: "📺"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["youtube", "typescript"]
 published: false
+publication_name: chot
 ---
 
 ChannelID は YouTube の中でチャンネルを一意に識別する ID です(そのまま)。
