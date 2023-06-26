@@ -101,6 +101,17 @@ describe("getChannelIdFromChannelUrl", () => {
     });
   });
 
+  it("存在しないチャンネルの URL を渡すとエラーになる", async () => {
+    const result = await getChannelIdFromChannelUrl(
+      "https://www.youtube.com/@helloprojectstationxxx"
+    );
+
+    expect(result).toEqual({
+      type: "error",
+      reason: "COULD_NOT_FETCH",
+    });
+  });
+
   it("チャンネルページではない YouTube URL を渡すとパースに失敗する", async () => {
     const result = await getChannelIdFromChannelUrl(
       "https://www.youtube.com/watch?v=1woGBSxV-L0"
