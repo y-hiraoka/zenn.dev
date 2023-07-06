@@ -7,6 +7,8 @@ published: false
 publication_name: chot
 ---
 
+ちょっと株式会社で Web エンジニアをしているすてぃんと申します。今回はヘッドレスコンポーネントの Radix で提供される Toast のお話です。
+
 Toast は、ユーザーのアクションの結果、成功したり失敗したことをフィードバックするために一時的にぴょこっと表示される UI です。たくさんのヘッドレスコンポーネントを提供する Radix には、Toast の機能とアクセシビリティを提供するパッケージがあります。
 
 ```bash
@@ -169,7 +171,7 @@ export function useToast() {
 }
 ```
 
-`OpenToastContext` を export するのではなく、 `useToast` という名前を付けてから export しましょう。react-refresh の eslint が怒る？さぁ…興味ないから…。
+`OpenToastContext` を export するのではなく、 `useToast` という名前を付けてから export しましょう(react-refresh の eslint が怒る？さぁ…興味ないから…。)。
 
 実際に `Context.Provider` で値を配信する部分は後述。
 
