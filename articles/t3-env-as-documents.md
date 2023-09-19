@@ -3,7 +3,7 @@ title: "リポジトリで必要な環境変数のドキュメントを t3-env �
 emoji: "🏭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["t3env"]
-published: false
+published: true
 publication_name: chot
 ---
 
