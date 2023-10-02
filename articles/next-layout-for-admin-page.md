@@ -4,6 +4,7 @@ emoji: "🈲"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nextjs"]
 published: false
+publication_name: chot
 ---
 
 みなさんこんにちは。chot Inc. の Web エンジニアです。
