@@ -7,7 +7,7 @@ published: false
 publication_name: chot
 ---
 
-ちょっと株式会社 Advent Calendar 2023 3 日目の記事です。
+ちょっと株式会社 Advent Calendar 2023 6 日目の記事です。
 
 https://adventar.org/calendars/8910
 
