@@ -8,7 +8,7 @@ publication_name: chot
 published_at: 2023-12-06 10:00
 ---
 
-![](/images/grid-template-auto-fill-with-tailwind/eyecatch.png)
+![特に追加の情報がなく視覚的インパクトを与えるのが目的のキャッチ画像](/images/grid-template-auto-fill-with-tailwind/eyecatch.png)
 
 ちょっと株式会社 Advent Calendar 2023 12 月 6 日の記事です。
 
@@ -16,7 +16,7 @@ https://adventar.org/calendars/8910
 
 ## こんなレイアウトありますよね
 
-![image](/images/grid-template-auto-fill-with-tailwind/grid-template-auto-fill-example.gif)
+![グリッドレイアウトを例示するgifアニメーション。画面幅を徐々に大きくしていくと、グリッドのカラム数が自動で増加していく。ただしカラムの幅は最低240pxが維持されている](/images/grid-template-auto-fill-with-tailwind/grid-template-auto-fill-example.gif)
 
 1 カラムは 240px 以上を維持しつつ、横幅に入るだけのカラム数を自動で増やしてくれるようなグリッドレイアウトです。画面幅ではなく親要素の幅によってカラム数が決まるので、コンポーネント指向の Web アプリ開発に向いていて重宝しています。
 
