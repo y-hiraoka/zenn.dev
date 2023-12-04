@@ -5,9 +5,10 @@ type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["tailwindcss"]
 published: false
 publication_name: chot
+published_at: 2023-12-06 10:00
 ---
 
-ちょっと株式会社 Advent Calendar 2023 6 日目の記事です。
+ちょっと株式会社 Advent Calendar 2023 5 日目の記事です。
 
 https://adventar.org/calendars/8910
 
