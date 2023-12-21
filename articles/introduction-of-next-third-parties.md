@@ -5,6 +5,7 @@ type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nextjs"]
 published: true
 published_at: 2023-12-24 11:00
+publication_name: chot
 ---
 
 !!!!!!!!!!!!!!!!!!!!!!!!(ここにアイキャッチ画像)!!!!!!!!!!!!!!!!!!!!!!!!
