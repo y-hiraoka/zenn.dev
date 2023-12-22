@@ -8,7 +8,7 @@ published_at: 2023-12-24 11:00
 publication_name: chot
 ---
 
-!!!!!!!!!!!!!!!!!!!!!!!!(ここにアイキャッチ画像)!!!!!!!!!!!!!!!!!!!!!!!!
+![特に追加の情報がなく視覚的インパクトを与えるのが目的のキャッチ画像](/images/introduction-of-next-third-parties/eyecatch.png)
 
 ちょっと株式会社 Advent Calendar 2023 12 月 24 日の記事です。
 
