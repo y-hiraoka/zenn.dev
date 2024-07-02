@@ -84,3 +84,5 @@ https://github.com/uidotdev/usehooks/issues/254#issuecomment-1778088998
 - 仮に使うことになっても、必ずユーザーに違和感を与えるチラツキを抑える
 - ライブラリがSSRでエラーをthrowするのは思想なので従おう
 - 回避策はあるけど回避するな
+
+それでは良いReactライフを！
