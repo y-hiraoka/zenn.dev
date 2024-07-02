@@ -4,7 +4,7 @@ emoji: "📵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react"]
 published: false
-publication: chot
+publication_name: chot
 ---
 
 こんにちは、エンジニアです。
