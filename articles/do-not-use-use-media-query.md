@@ -39,7 +39,7 @@ https://zenn.dev/stin/articles/use-sync-external-store-with-match-media
 
 `useMediaQuery`は`window`オブジェクトに依存しています。つまりブラウザ上でしか正しく判定できません。
 
-一方で昨今はサーバーサイドレンダリング(SSR)でHTMLを生成してからブラウザ上でイベントハンドラーを復元するhydrationを行います。サーバーサイドにはwindowオブジェクトがないため、固定値を返すかエラーを投げるしかありません。
+一方で昨今はサーバーサイドレンダリング(SSR)でHTMLを生成してからブラウザ上でイベントハンドラーを復元するhydrationを行います。サーバーサイドには`window`オブジェクトがないため、固定値を返すかエラーを投げるしかありません。
 
 サーバーサイドで固定値を返す場合、その固定値と実際のブラウザ上で計算される値が異なる可能性があります。作りが悪いカスタムフックだと、これがhydrationエラーとしてレポートされることになります。作りが良くて(？)`useSyncExternalStore`や`useEffect`を上手く駆使しているとしても、それをスタイリングの制御に使っている場合はレイアウトシフトとして悪影響を及ぼします(本記事では適用されるCSSが突然変化してチラチラして見える現象を総称してレイアウトシフトと呼ぶことにします)。
 
@@ -52,11 +52,13 @@ https://zenn.dev/stin/articles/use-sync-external-store-with-match-media
 
 敢えて`useEffect`と書いたのは`useSyncExternalStore`を使っても`useEffect`と変わらないと言えるためです。それは React17 以前のバージョン向けに用意された`useSyncExternalStore`のポリフィルから判断できます。ポリフィルのソースコードを見ると、`useSyncExternalStore`は`useEffect`(または`useLayoutEffect`)で代替実装ができるフックです。
 
-[https://github.com/facebook/react/blob/main/packages/use-sync-external-store/src/useSyncExternalStoreShimClient.js](https://github.com/facebook/react/blob/main/packages/use-sync-external-store/src/useSyncExternalStoreShimClient.js)
+https://github.com/facebook/react/blob/3db98c917701d59f62cf1fbe45cbf01b0b61c704/packages/use-sync-external-store/src/useSyncExternalStoreShimClient.js
 
 ## 解決策
 
 スタイリングの制御に使うなら、まずCSSのメディアクエリで実装できないか検討してください。CSSで実装すれば最初からブラウザのサイズが考慮されたスタイリングが当たり、レイアウトシフトの原因にはなりません。
+
+スタイリングではない箇所、例えばイベントハンドラーや`useEffect`で画面幅を取りたい場合は、それらの関数の中で計算すればよいです。カスタムフックは必要ありません。
 
 ## 使っても良い箇所
 
