@@ -19,7 +19,7 @@ img要素の`src`属性を空文字列にすると、リンク切れになるこ
 
 ### そのときHTMLImageElementは
 
-JavaScriptで`src`が空文字列のimg要素のDOMインスタンスを確認してみましょう。https://zenn.dev/stin を開き、Chrome開発者ツールを使って`src`属性に空文字列を指定したimg要素を埋め込んでおきます。
+JavaScriptで`src`が空文字列のimg要素のDOMインスタンスを確認してみましょう。例として https://zenn.dev/stin を開き、Chrome開発者ツールを使って`src`属性に空文字列を指定したimg要素を埋め込んでおきます。
 
 そして次のJavaScriptを実行します。
 
