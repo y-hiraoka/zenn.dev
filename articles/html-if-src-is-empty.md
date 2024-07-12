@@ -3,7 +3,7 @@ title: "空世界 〜HTMLの永遠仕様探訪記、或いは、文字なきsrc�
 emoji: "🌦️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["html"]
-published: false
+published: true
 publication_name: chot
 ---
 
@@ -167,4 +167,4 @@ https://github.com/bubkoo/html-to-image/blob/128dc3edfde95d6ac636f2756630f5cbd6f
 
 仕様違反のコードは書かないように気をつけよう。仕様書読むのめちゃ疲れた。
 
-それでは良いHTMLライフを！この両の手が死に届くその日まで。
+それでは良いHTMLライフを。この両の手が死に届くその日まで。
