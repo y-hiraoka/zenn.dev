@@ -160,7 +160,7 @@ https://github.com/bubkoo/html-to-image/blob/128dc3edfde95d6ac636f2756630f5cbd6f
 
 ## まとめ
 
-- img要素の`src`属性を空文字列にすると、そのHTMLImageElementの`src`プロパティは空文字列になる
+- img要素の`src`属性を空文字列にすると、そのHTMLImageElementの`src`プロパティはHTMLのURLを指す
 - HTML仕様では`src`属性を空文字列にするのは仕様違反
 - 空文字列自体はbase URLがあればvalid URL stringとみなせる
 - html-to-image使うときは仕様違反のimg要素に気をつけて
