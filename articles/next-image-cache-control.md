@@ -3,7 +3,7 @@ title: "Next.jsの画像周りのキャッシュ戦略について調べる"
 emoji: "🌆"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nextjs"]
-published: false
+published: true
 publication_name: chot
 ---
 
