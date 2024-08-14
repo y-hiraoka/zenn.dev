@@ -3,7 +3,7 @@ title: "valibotでenvをタイプセーフに扱うvalibot-envを作った"
 emoji: "🤖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["valibot", "nextjs"]
-published: false
+published: true
 publication_name: chot
 ---
 
