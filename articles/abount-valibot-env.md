@@ -31,6 +31,8 @@ t3-envのREADMEでは、好きなバリデーションライブラリと組み�
 
 https://github.com/y-hiraoka/valibot-env
 
+ちなみに、この記事は会社のpublication投稿ですが、ライブラリは個人開発です。
+
 ## 使い方
 
 ### インストール
