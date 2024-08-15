@@ -40,7 +40,7 @@ https://github.com/y-hiraoka/valibot-env
 t3-envはコアAPIとNext.js用、Nuxt用にパッケージが分かれていますが、valibot-envでは分けていません。valibot-envと、peerDepsであるvalibotをインストールしてください。
 
 ```bash
-npm install valibot-env
+npm install valibot-env valibot
 ```
 
 ### Next.js以外のプロジェクト
