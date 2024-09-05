@@ -3,7 +3,7 @@ title: "URLシェアを支える技術 lz-string"
 emoji: "🔗"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["typescript", "javascript"]
-published: false
+published: true
 publication_name: chot
 ---
 
