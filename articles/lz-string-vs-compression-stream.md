@@ -11,7 +11,7 @@ publication_name: chot
 
 https://zenn.dev/chot/articles/what-is-lz-string
 
-すると、jser.infoで有名なazuさんから次のような反応をいただきました。
+すると、[jser.info](https://jser.info/)で有名なazuさんから次のような反応をいただきました。
 
 https://x.com/azu_re/status/1832249554517029209
 
