@@ -104,12 +104,7 @@ export async function compressToBase64(input: string): Promise<string> {
   const compression = new CompressionStream("deflate");
   const stream = upstream.pipeThrough(compression);
   const compressed = await new Response(stream).arrayBuffer();
-  return btoa(
-    new Uint8Array(compressed).reduce(
-      (acc, c) => acc + String.fromCharCode(c),
-      "",
-    ),
-  );
+  return btoa(String.fromCharCode(...new Uint8Array(compressed)));
 }
 ```
 
