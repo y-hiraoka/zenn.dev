@@ -3,7 +3,7 @@ title: "2つのJSONの差分を動的に表示する。シンタックスハイ�
 emoji: "🎓"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["react", "shiki"]
-published: false
+published: true
 publication_name: chot
 ---
 
