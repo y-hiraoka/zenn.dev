@@ -21,7 +21,7 @@ export default async function Page({
 }
 ```
 
-各パラメーターの型が`string | string[] | undefined`となっていますね。これを使うときに型チェックが面倒になって`searchParams.query as string`と書いてしまっているのをよく見ます。`string[]`になるのは、次のように同じパラメーターキーを複数指定したURLの場合です。
+各パラメーターの型が`string | string[] | undefined`となっていますね。これを使うときに型チェックが面倒になって`searchParams.filters as string`と書いてしまっているのをよく見ます。`string[]`になるのは、次のように同じパラメーターキーを複数指定したURLの場合です。
 
 ```
 /search?filters=foo&filters=bar
@@ -42,13 +42,13 @@ export default async function Page({
 }
 ```
 
-`sort`はまるで必ず`"asc"`と`"desc"`が届くかのような型定義になっていますが、実際はサイト訪問者のURL手入力により`sort`は`string`どころか`string[]`にも`undefined`にもなり得ます。しかし上記のコードでは取りうる値が型に反映されていないため、コード上は特に考慮しなくても型チェックは通ってしまうでしょう。`q`も同様に`string`だけでなく`string[] | undefined`の考慮ができていません。
+`sort`はまるで必ず`"asc"`か`"desc"`が届くかのような型定義になっていますが、実際はサイト訪問者のURL手入力により`sort`は`string`どころか`string[]`にも`undefined`にもなり得ます。しかし上記のコードでは取りうる値が型に反映されていないため、コード上は特に考慮しなくても型チェックは通ってしまうでしょう。`q`も同様に`string`だけでなく`string[] | undefined`の考慮ができていません。
 
 `string`がくる前提の処理に`string[]`や`undefined`が届けば、高確率でランタイムエラーになることでしょう。それは500エラーとなり、エラーログが汚染され、エラーは無視される習慣になるかもしれません…。
 
-`searchParams`の型をごまかすだけで、外からエラーを起こさせることが可能になってしまいます。それを避けるためにも`searchParams`はランタイムでバリデーションすべきです。
+`searchParams`の型をごまかすだけで、外からエラーを発生させることが可能になってしまいます。それを避けるためにも`searchParams`はランタイムでバリデーションすべきです。
 
-ところで、`params`はランタイムチェックしなくてもセーフです。なぜなら`params`はページコンポーネントのファイル名から型が決まるため、`string`想定のパラメーターに`string[]`が入ってくる可能性がありません。例えば次のようにファイル名とパラメーターの型が対応します。
+ところで、パスパラメーターの`params`はランタイムチェックしなくてもセーフです。なぜなら`params`はページコンポーネントのファイル名から型が決まるため、`string`想定のパラメーターに`string[]`が入ってくる可能性がありません。例えば次のようにファイル名とパラメーターの型が対応します。
 
 | File Path                            | Type                                          |
 | ------------------------------------ | --------------------------------------------- |
@@ -60,7 +60,7 @@ export default async function Page({
 
 余談ですが、僕がNext.jsで作るときは次のような`next.d.ts`ファイルを作ることで、ページコンポーネントの型定義を少し楽にしています。
 
-```tsx
+```tsx:next.d.ts
 import "next";
 
 declare module "next" {
@@ -82,9 +82,10 @@ declare module "next" {
 ```tsx
 import { NextSegmentPage } from "next";
 
-const Page: NextSegmentPage<{
-  params: { slug: string };
-}> = async ({ params, searchParams }) => {
+const Page: NextSegmentPage<{ params: { slug: string } }> = async ({
+  params,
+  searchParams,
+}) => {
   const slug: string = (await params).slug;
   const queryString: string | string[] | undefined = (await searchParams).q;
 };
@@ -92,17 +93,26 @@ const Page: NextSegmentPage<{
 export default Page;
 ```
 
-これでわざわざ`React.FC<{params: Promise<{ slug: string }>; searchParams: Promise<{ [key: string]: string | string[] | undefined }>; }>`と書かなくても済むようになります。Next.js 15になって`Promise`にもなったので、より型定義を楽にする効果があります。
+これでわざわざページコンポーネントを書くときに
+
+```tsx
+const Page: React.FC<{
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}>;
+```
+
+と長々と書かなくても済むようになります。Next.js 15になって`Promise`にもなったので、より型定義を楽にする効果があります。
 
 ## valibotでバリデーションする
 
-`searchParams`の型をごまかすことは危険であることはわかりました。型をごまかすのではなくランタイムでバリデーションをしましょう。
+`searchParams`の型をごまかすことが危険なことはわかりました。型をごまかすのではなくランタイムでバリデーションをしましょう。
 
 valibotを使ってくださいと言ってしまえば終わりなのですが、僕がよくやっている書き方を紹介します。
 
 valibotは宣言的にバリデーションを書くことができるライブラリです。どんな値であるべきかを宣言するように書けるので、読みやすいバリデーションをサクッと実装できます。
 
-zodでも他のバリデーションライブラリでもいいのですが、どれも未使用なら圧倒的にvalibotをおすすめします。バンドルサイズが小さくできるからです。`seachParams`の検証はサーバーサイドなのでバンドルサイズは関係ないですが、どうせそのうちクライアントサイドでもバリデーションすることになるのでね。書き心地もzodと比べて劣りません。快適です。
+zodでも他のバリデーションライブラリでもいいのですが、どれも未使用なら圧倒的にvalibotをおすすめします。バンドルサイズが小さくできるからです。`searchParams`の検証はサーバーサイドなのでバンドルサイズは関係ないですが、どうせそのうちクライアントサイドでもバリデーションすることになるのでね。書き心地もzodと比べて劣りません。快適です。
 
 ```bash
 npm install valibot
@@ -113,23 +123,25 @@ npm install valibot
 僕の`searchParams`バリデーションの方針は次の通りです。
 
 - `string`を期待するパラメーターが`string[]`になっていたら失敗とする
-- 変換する必要があるパラメーターはvalibotの`transform()`で変換まで行う
+- 変換する必要があるパラメーターはvalibotの`v.transform()`で変換まで行う
 - パースには`v.safeParse()`/`v.safeParseAsync()`ではなく`v.parse()`/`v.parseAsync()`を使う
+
+`v.parse()`/`v.safeParse()`はバリデーションを実行するメソッドで、違いはエラーをthrowするかResult型を返すかです。
 
 ### `string`を期待するパラメーターが`string[]`になっていたら失敗とする
 
-前述の通り、`searchParams`は同じキーを複数指定することで`string[]`として渡すことができます。ただ、多くの`searchParams`は複数指定されることは期待しません。URLに`sort`を2つ含む場合、それはサイトの訪問者がURLに手入力した可能性が高く、無視しても問題ないと考えます。
+前述の通り、`searchParams`は同じキーを複数指定することで`string[]`として渡すことができます。ただ、多くの`searchParams`は複数指定されることは期待しません。例えばURLに`sort`を2つ含む場合、それはサイトの訪問者がURLバーに手入力した可能性が高く、無視しても問題ないと考えます。
 
 ```ts
 const QueryStringSchema = v.object({
   q: v.optional(v.string()),
 });
 
-// エラーをthrowする
+// qが配列なので、エラーをthrowする
 v.parse(QueryStringSchema, { q: ["foo", "bar"] });
 ```
 
-上記コードは`q`が`string`か`undefined`であることを期待し、`string[]`の場合は検証失敗とします。もし単一の値を期待するパラメーターに複数指定されたとき、検証失敗ではなく先頭の値を採用する方針の場合は次のようにスキーマを組み立てることができます。
+上記コードは`q`が`string`か`undefined`であることを期待し、`string[]`の場合は検証失敗とします。もし単一の値を期待するパラメーターに複数指定されたとき、検証失敗ではなく先頭の値を採用する方針としたい場合は次のように`v.union()`と`v.transform()`を使ってスキーマを組み立てることができます。
 
 ```ts
 const QueryStringSchema = v.object({
@@ -141,6 +153,7 @@ const QueryStringSchema = v.object({
   ),
 });
 
+// qが配列なので、先頭の値を採用する
 const validated = v.parse(QueryStringSchema, { q: ["foo", "bar"] });
 ```
 
@@ -208,13 +221,13 @@ const validated = await v.parseAsync(CompressedCodeSchema, {
 });
 ```
 
-`compressToEncodedURIComponent()`は非同期処理なので、valibotのメソッドも非同期バージョンを使用していることに注意してください。非同期処理を含むスキーマも同期バージョンのメソッド名に`Async`を付けるだけで非常にわかりやすいのがvalibotの嬉しいポイントです。
+`compressToEncodedURIComponent()`は非同期処理なので、valibotのメソッドも非同期版を使用していることに注意してください。非同期処理を含むスキーマも同期版のメソッド名に`Async`を付けるだけで非常にわかりやすいのがvalibotの嬉しいポイントです。
 
 ### パースには`v.safeParse()`/`v.safeParseAsync()`ではなく`v.parse()`/`v.parseAsync()`を使う
 
 `v.safeParse()`はその結果がいわゆる`Result`型となります。それはそれで嬉しいケースもありますが、`searchParams`の検証でいちいち成功可否の分岐を書くのは手間です。バリデーションに失敗してもさっさとデフォルト値で埋めて、処理を続行したい。
 
-対して`v.parse()`はバリデーション違反があるとエラーをthrowします。`searchParams`を検証するだけでエラーを投げられるのは面倒ですが、必ず成功するスキーマを組み立てれば`try-catch`する必要もなくなります。必ず成功するスキーマを組み立てるには、`v.fallback()`を使用します。
+対して`v.parse()`は一発で検証済みの値を取得できますが、バリデーション違反があるとエラーをthrowします。`searchParams`を検証するだけでエラーを投げられるのは面倒ですが、必ず成功するスキーマを組み立てれば`try-catch`する必要もなくなります。必ず成功するスキーマを組み立てるには、`v.fallback()`を使用します。
 
 ```tsx
 import { NextSegmentPage } from "next";
@@ -253,11 +266,11 @@ export default Page;
 
 上記コードは`searchParams`の各キーに`v.fallback()`を使用しています。(ここまでの記事のまとめコードにもなっています)
 
-上記コードは`v.parse()`によってエラーがthrowされることはありません。すべてのキーが`v.fallback()`を使用しており、バリデーション違反があってもデフォルト値で埋められるためです。
+上記コードは`v.parse()`によってエラーがthrowされることはありません。すべてのキーが`v.fallback()`を使用しており、バリデーション違反があってもデフォルト値で埋められるためです。また、各キーそれぞれで`v.fallback()`を使用しているので、バリデーションに成功した値はそれが使われ、失敗した値だけがフォールバック値で埋められます。
 
 例えば`sort`は`"asc"`か`"desc"`を期待しますが、それ以外の値が指定された場合は無視して`"asc"`にフォールバックします。
 
-また、`page`は`number`に変換した後さらに自然数かどうかのチェックもしていますが、それに失敗した場合は`1`にフォールバックします。小数やゼロ以下の数に変換できてしまうのはサイト訪問者が手入力している可能性が高いため、無視しても問題ないという判断です。
+また、`page`は`number`に変換した後さらに自然数かどうかのチェックもしていますが、それに失敗した場合も`1`にフォールバックします。小数やゼロ以下の数に変換できてしまうのはサイト訪問者が手入力している可能性が高いため、無視しても問題ないという判断です。
 
 これで、`searchParams`をランタイムにバリデーションできるようになりました。エラーをthrowすることもないし、失敗したらフォールバックさせることもできるし、型安全でもあります。valibotは本当に便利ですね。
 
@@ -269,4 +282,4 @@ valibotを使うことで、バリデーションのスキーマを宣言的に�
 
 valibotでNext.jsの安全性を高めましょう。もちろん`searchParams`以外も、外界からの値のバリデーションにも使えます。
 
-それでは良いvalibotライフを！
+それでは良いvalibot/Next.jsライフを！
