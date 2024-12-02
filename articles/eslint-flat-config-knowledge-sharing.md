@@ -3,7 +3,7 @@ title: "monorepoにESLintのFlat Configを導入した"
 emoji: "✅"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["eslint"]
-published: false
+published: true
 publication_name: chot
 ---
 
