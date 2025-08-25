@@ -3,7 +3,7 @@ title: "CommonJS アプリケーションを ESM に移行する。ついでに 
 emoji: "🔀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["typescript", "nodejs", "vitest"]
-published: false
+published: true
 publication_name: chot
 ---
 
