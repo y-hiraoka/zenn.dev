@@ -119,7 +119,7 @@ https://github.com/anza-xyz/eslint-plugin-require-extensions
 
 ### `__dirname`, `__filename` を定義
 
-`__dirname`, `__filename` は ESM で起動する Node.js ランタイムでは定義されていません。Node.js 24からは代替の `import.meta.dirname`, `import.meta.filename` がありますが、Node.js 20 なのでそれも使えません。
+`__dirname`, `__filename` は ESM で起動する Node.js ランタイムでは定義されていません。Node.js 20 からは代替の `import.meta.dirname`, `import.meta.filename` がありますが、v20 時点では Experimental API で stable になるのは v24 以降です。
 
 ですので、使用箇所で毎回次のように変数宣言するようにしました。
 
