@@ -9,7 +9,7 @@ publication_name: chot
 
 TypeScript の ORM である Prisma の話。
 
-Primary Key 制約や Unique 制約のついたカラムを Where 句に指定してデータを取得する場合、通常は `findUnique` を使います。
+Primary Key 制約や Unique 制約のついたカラムを WHERE 句に指定してデータを取得する場合、通常は `findUnique` を使います。
 
 ```ts
 await prisma.user.findUnique({ where: { id: userId } });
@@ -21,11 +21,11 @@ await prisma.user.findUnique({ where: { id: userId } });
 await prisma.user.findFirst({ where: { id: userId } });
 ```
 
-しかし、この `findFirst` が恐ろしい不具合を埋め込みかねないので、ちゃんと `findUnique` を使いましょう、という話です。
+しかし、この `findFirst` が恐ろしい不具合を生みかねないので、ちゃんと `findUnique` を使いましょう、という話です。
 
 ## 起きること
 
-`findFirst`/`findFirstOrThrow`/`findMany` の Where 句に `undefined` を指定すると、そのカラムに対するフィルタリングを指定しないことを意味します。
+`findFirst`/`findFirstOrThrow`/`findMany` の `where` 句に `undefined` を指定すると、そのカラムに対するフィルタリングを指定しないことを意味します。
 
 次のようなクエリを書いているとします。
 
@@ -48,9 +48,9 @@ WHERE 1=1
 LIMIT ? OFFSET ?
 ```
 
-Where 句には何も条件が指定されていません。つまり、無条件に検索したユーザーの中から先頭の1人を取得することになります。サービスにログインしたら全然違う人として認証されてしまう…なんてことが起こり得ます。
+WHERE 句には何も条件が指定されていません。つまり、無条件に検索したユーザーの中から先頭の1人を取得することになります。サービスにログインしたら全然違う人として認証されてしまう…なんてことが起こり得ます。
 
-そんなの型エラーで検出できるだろと思われるかもしれません。しかし、JWT 周りのコードは verify 後のペイロードの型を `as` アサーションで誤魔化していたり、Express.js 向けの認証ライブラリが `any` を使っていたりと、型エラーで検出不可能な場合が多いです。
+そんなの型エラーで検出できるだろと思われるかもしれません。しかし、JWT 周りのコードは verify 後のペイロードの型を `as` アサーションでごまかしていたり、Express.js 向けの認証ライブラリが `any` を使っていたりと、型エラーで検出不可能な場合が多いです。
 
 実データベースを動かすテストコードを書いていたとしても、不具合を検出できない可能性が高いです。なぜなら、テストデータとしてユーザーを1件だけ登録していることが多いので、「無条件に検索したユーザーの中の先頭」はそのテストユーザーになるからです。
 
@@ -62,7 +62,7 @@ Primary Key 制約か Unique 制約のついたカラムで一意に特定され
 await prisma.user.findUnique({ where: { id: jwtPayload.userId } });
 ```
 
-`findUnique` はユニークに絞込み可能なカラムを `where` 句に指定させることを、型レベルだけでなくランタイムでもチェックしています(後述の `strictUndefinedChecks` が無効でも)。
+`findUnique` はユニークに絞り込み可能なカラムを `where` 句に指定させることを、型レベルだけでなくランタイムでもチェックしています(後述の `strictUndefinedChecks` が無効でも)。
 
 仮に次のような `where` 句の `id` に `undefined` を指定したコードを実行したとしても、ランタイムエラーとなり不具合の早期検出が可能です。
 
@@ -81,11 +81,11 @@ Invalid `prisma.user.findUnique()` invocation in
 
 なぜ一意なデータを取得するときにお誂え向きな `findUnique` ではなく、`findFirst` を使っていたのでしょうか？ここには Prisma ユーザーのスキルレベルに留まらない原因があると考えます。
 
-Prisma v4 以前では、`findUnique` の Where 句にユニークになるカラム以外を指定できませんでした(v4.5からフラグ付きで指定可)。
+Prisma v4 以前では、`findUnique` の `where` 句にユニークになるカラム以外を指定できませんでした(v4.5 から feature preview `extendedWhereUnique` として追加、v5 でデフォルトになった)。
 
 https://www.prisma.io/docs/orm/reference/prisma-client-reference#filter-on-non-unique-fields-with-userwhereuniqueinput
 
-つまり、次のようなテーブル構造の時に、
+つまり、次のようなテーブル構造のときに、
 
 ```prisma
 model User {
@@ -153,7 +153,7 @@ model UserOrganizationRole {
 }
 ```
 
-`OrganizationUser` テーブルを `organizationId` と `userId` で検索して特定のユーザーの `role` を知るには、次のように書くことができますね。
+`UserOrganizationRole` テーブルを `organizationId` と `userId` で検索して特定のユーザーの `role` を知るには、次のように書くことができますね。
 
 ```ts
 await prisma.userOrganizationRole.findUnique({
@@ -166,9 +166,9 @@ await prisma.userOrganizationRole.findUnique({
 });
 ```
 
-ところで、`User` の `email` カラムには `@unique` が付いているので、`User` は `email` によっても一意に絞り込めます。つまり、物理的には `OrganizationUserRole` テーブルを `(organizationId, email)` の組み合わせで一意に絞りこめるはずです。
+ところで、`User` の `email` カラムには `@unique` が付いているので、`User` は `email` によっても一意に絞り込めます。つまり、物理的には `UserOrganizationRole` テーブルを `(organizationId, email)` の組み合わせで一意に絞り込めるはずです。
 
-しかしそうは問屋が卸しません。`findUnique` の Where 句にはテーブルを跨いだユニークなカラム指定ができないようになっています。なのでこのケースでは `findFirst` を使う必要があります。
+しかしそうは問屋が卸しません。`findUnique` の `where` 句にはテーブルを跨いだユニークなカラム指定ができないようになっています。なのでこのケースでは `findFirst` を使う必要があります。
 
 ```ts
 await prisma.userOrganizationRole.findFirst({
@@ -179,11 +179,37 @@ await prisma.userOrganizationRole.findFirst({
 });
 ```
 
+または、クエリを2回に分けることを受け入れられるならば、`findUnique` を使うこともできます。
+
+```ts
+const user = await prisma.user.findUniqueOrThrow({
+  where: { email: userEmail },
+});
+
+await prisma.userOrganizationRole.findUnique({
+  where: {
+    userId_organizationId: {
+      organizationId: organizationId,
+      userId: user.id,
+    },
+  },
+});
+```
+
 ### より安全にするために
 
-直前の `findFirst` の例で、周辺コードを修正していたらいつの間にか `organizationId` が `string | undefined` 型になってしまったとします。
+次の `findFirst` の例で、周辺コードを修正していたらいつの間にか `organizationId` が `string | undefined` 型になってしまったとします。
 
-`findFirst` は元々 Where 句の任意のカラムがオプショナルになっているわけですから、型エラーにはなりません。
+```ts
+await prisma.userOrganizationRole.findFirst({
+  where: {
+    organizationId: organizationId, // organizationId: string | undefined
+    user: { email: userEmail },
+  },
+});
+```
+
+`findFirst` は元々 `where` 句の任意のカラムがオプショナルになっているわけですから、型エラーにはなりません。
 
 こういった意図しない `undefined` の混入を防ぐために、Prisma の preview features のひとつに `strictUndefinedChecks` があります。
 
@@ -225,7 +251,7 @@ Invalid value for argument `where`: explicitly `undefined` values are not allowe
 条件によって値を指定したり指定しなかったりするクエリの場合は、`Prisma.skip` を `undefined` の代わりに指定してやります。次は記事検索を想定したクエリ例です。
 
 ```ts
-await prisma.blogPosts.findMany({
+await prisma.blogPost.findMany({
   where: { categoryId: params.categoryId ?? Prisma.skip },
 });
 ```
