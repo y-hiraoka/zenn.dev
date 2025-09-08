@@ -3,7 +3,7 @@ title: "【Prisma】findFirst をユニーク検索に使うと危ない"
 emoji: "😱"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["prisma"]
-published: false
+published: true
 publication_name: chot
 ---
 
