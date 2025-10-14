@@ -17,6 +17,15 @@ Flat Config自体は目新しいものではなくなってきているので、
 
 `my-monorepo`は各自のプロジェクト名に、`some-workspace`は個別のワークスペース名に置き換えてください。
 
+:::message
+
+追記
+
+本記事で紹介している `tseslint.config` は非推奨になりました。ESLint 本体が提供する `defineConfig` を使用してください。
+
+https://typescript-eslint.io/packages/typescript-eslint/#config-deprecated
+:::
+
 ```js :eslint.config.mjs
 import globals from "globals";
 import eslint from "@eslint/js";
