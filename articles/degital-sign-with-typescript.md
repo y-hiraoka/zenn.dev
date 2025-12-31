@@ -3,7 +3,7 @@ title: "デジタル署名を TypeScript で学ぶ"
 emoji: "✍️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["typescript", "crypto"]
-published: false
+published: true
 ---
 
 ## デジタル署名とは
@@ -120,7 +120,7 @@ const cryptoKeyPair = await crypto.subtle.generateKey(
 );
 ```
 
-アルゴリズム名には `"RSA-PSS"` を指定します。署名作成用としては他に `"RSASSA-PKCS1-v1_5"`,`"ECDSA"`, `"HMAC"`, `"d25519"` があります。
+アルゴリズム名には `"RSA-PSS"` を指定します。署名作成用としては他に `"RSASSA-PKCS1-v1_5"`,`"ECDSA"`, `"HMAC"`, `"Ed25519"` があります。
 
 `modulusLength` は RSA の法のサイズを指します。鍵の強度に関わるパラメーターです。2048 bit 以上を指定するのが推奨されています。
 
@@ -173,7 +173,7 @@ const publicKey = await crypto.subtle.importKey(
 );
 ```
 
-上記コードの `publicKey` は `CryptoKey` 型オブジェクトで、`crypto.subtle.sign`, `crypto.subtle.verify`, `crypto.subtle.encrypt` メソッドなどに渡せる値です。
+上記コードの `publicKey` は `CryptoKey` 型オブジェクトで、`crypto.subtle.sign`, `crypto.subtle.verify` メソッドに渡せる値です。
 
 ## 署名の作成
 
