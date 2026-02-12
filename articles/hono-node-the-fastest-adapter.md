@@ -29,17 +29,27 @@ Cloudflare Workers や Bun などの JavaScript ランタイムは、`(request: 
 
 https://github.com/honojs/node-server
 
+Hono 公式の Node.js アダプターです。 README によれば、Express.js の3.5倍高速とのことです。
+
 ### `@remix-run/node-fetch-server`
 
 https://github.com/remix-run/remix/tree/main/packages/node-fetch-server#readme
+
+Remix チームが提供している Node.js アダプターです。Remix も Web 標準で動作するフレームワークなので、Node.js 上で起動するにはアダプターが必要です。
+
+ちなみに、フレームワークとしての React Router のほうは Remix コアメンバーの個人ライブラリである `@mjackson/node-fetch-server` のほうが使用されていました([利用箇所](https://github.com/remix-run/react-router/blob/18ae5d189e7ce529e00669ec797d7fa445274a33/packages/react-router-serve/cli.ts#L8C10-L8C31))。`@remix-run/node-fetch-server` は個人ライブラリを Remix リポジトリに取り込んだものと思われます。
 
 ### `srvx`
 
 https://srvx.h3.dev/
 
+[Nitro](https://nitro.build/) や [Nuxt](https://nuxt.com/) の内部で使われている [H3](https://h3.dev/) という Web フレームワークの、さらに内部で利用されるライブラリです。`export default { fetch }` というひとつのコードを、あらゆる JS ランタイムで HTTP サーバーとして起動できるようにするためのアダプターや CLI を提供しています。
+
 ### `@whatwg-node/server`
 
 https://github.com/ardatan/whatwg-node#readme
+
+`Request` / `Response` でサーバーアプリを記述し、Node.js を含むあらゆるランタイムやフレームワークで動作させることを目的とするライブラリです。Cloudflare Workers や Deno だけでなく、Express や Fastify などとの統合もサポートします。
 
 ## 最速レスポンス選手権(ベンチマーク)
 
