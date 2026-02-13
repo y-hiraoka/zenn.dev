@@ -3,7 +3,7 @@ title: "Hono on Node.js 最速レスポンス選手権"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["hono"]
-published: false
+published: true
 publication_name: chot
 ---
 
